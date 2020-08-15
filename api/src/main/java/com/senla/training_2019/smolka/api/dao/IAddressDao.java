@@ -1,0 +1,7 @@
+package com.senla.training_2019.smolka.api.dao;
+
+import com.senla.training_2019.smolka.model.entities.Address;
+
+public interface IAddressDao extends IDao<Address, Long> {
+
+}
