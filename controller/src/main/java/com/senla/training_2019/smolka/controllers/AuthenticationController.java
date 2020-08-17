@@ -1,9 +1,10 @@
 package com.senla.training_2019.smolka.controllers;
 
-import com.senla.training_2019.smolka.config.file_config.FileConfig;
-import com.senla.training_2019.smolka.config.secutiry.api.ITokenParser;
+import com.senla.training_2019.smolka.web.utils.FileConfig;
+import com.senla.training_2019.smolka.web.utils.ITokenParser;
 import com.senla.training_2019.smolka.model.dto.LoginCredentialDto;
 import com.senla.training_2019.smolka.model.dto.MessageDto;
+import com.senla.training_2019.smolka.web.utils.ITokenParser;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

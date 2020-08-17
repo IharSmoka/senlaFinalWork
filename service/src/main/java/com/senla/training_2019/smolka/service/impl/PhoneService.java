@@ -89,7 +89,7 @@ public class PhoneService implements IPhoneService {
             if (store == null) {
                 throw new EntityNotFoundException("this store doesnt exists!");
             }
-            Phone phone = phoneDao.findById(phoneChangeDto.getId()).orElse(null);
+            Phone phone = phoneDao.findOne(phoneChangeDto.getId());
             if (phone == null) {
                 throw new EntityNotFoundException("this phone doesnt exists!");
             }
@@ -107,10 +107,10 @@ public class PhoneService implements IPhoneService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public void deletePhone(Integer id) throws InternalServiceException, EntityNotFoundException {
         try {
-            if (!(phoneDao.findById(id).orElse(null) == null)) {
+            if (!(phoneDao.findOne(id) == null)) {
                 throw new EntityNotFoundException("this phone doesnt exists!");
             }
-            phoneDao.deleteById(id);
+            phoneDao.delete(id);
         }
         catch (RuntimeException runtimeException) {
             throw new InternalServiceException(runtimeException.getMessage());
@@ -121,7 +121,7 @@ public class PhoneService implements IPhoneService {
     @Transactional(readOnly = true)
     public List<PhoneSimpleDto> findAllPhones(Integer page, Integer pageSize, String sortKey) {
         SortKeysForPhoneService sortKeysForPhoneService = SortKeysForPhoneService.valueOf(sortKey);
-        Page<Phone> phonePage = phoneDao.findAll(PageRequest.of(page, pageSize, Sort.by(sortKeysForPhoneService.getDirection(), sortKeysForPhoneService.getAttr().getName())));
+        Page<Phone> phonePage = phoneDao.findAll(new PageRequest(page, pageSize, new Sort(sortKeysForPhoneService.getDirection(), sortKeysForPhoneService.getAttr().getName())));
         return dtoMapper.toListMapping(phonePage.getContent(), PhoneSimpleDto.class);
     }
 
@@ -129,7 +129,7 @@ public class PhoneService implements IPhoneService {
     @Transactional(readOnly = true)
     public List<PhoneSimpleDto> findAllPhonesByStoreId(Long storeId, Integer page, Integer pageSize, String sortKey) {
         SortKeysForPhoneService sortKeysForPhoneService = SortKeysForPhoneService.valueOf(sortKey);
-        Page<Phone> phonePage = phoneDao.findAllByStoreId(storeId, PageRequest.of(page, pageSize, Sort.by(sortKeysForPhoneService.getDirection(), sortKeysForPhoneService.getAttr().getName())));
+        Page<Phone> phonePage = phoneDao.findAllByStoreId(storeId, new PageRequest(page, pageSize, new Sort(sortKeysForPhoneService.getDirection(), sortKeysForPhoneService.getAttr().getName())));
         return dtoMapper.toListMapping(phonePage.getContent(), PhoneSimpleDto.class);
     }
 
@@ -137,7 +137,7 @@ public class PhoneService implements IPhoneService {
     @Transactional(readOnly = true)
     public List<PhoneExtendedDto> findAllPhonesByOperatorCode(String operatorCode, Integer page, Integer pageSize, String sortKey) {
         SortKeysForPhoneService sortKeysForPhoneService = SortKeysForPhoneService.valueOf(sortKey);
-        Page<Phone> phonePage = phoneDao.findAllByOperatorCodeLike("%"+operatorCode+"%", PageRequest.of(page, pageSize, Sort.by(sortKeysForPhoneService.getDirection(), sortKeysForPhoneService.getAttr().getName())));
+        Page<Phone> phonePage = phoneDao.findAllByOperatorCodeLike("%"+operatorCode+"%", new PageRequest(page, pageSize, new Sort(sortKeysForPhoneService.getDirection(), sortKeysForPhoneService.getAttr().getName())));
         return dtoMapper.toListMapping(phonePage.getContent(), PhoneExtendedDto.class);
     }
 
@@ -145,7 +145,7 @@ public class PhoneService implements IPhoneService {
     @Transactional(readOnly = true)
     public List<PhoneExtendedDto> findAllPhonesByNumber(String number, Integer page, Integer pageSize, String sortKey) {
         SortKeysForPhoneService sortKeysForPhoneService = SortKeysForPhoneService.valueOf(sortKey);
-        Page<Phone> phonePage = phoneDao.findAllByNumberLike("%"+number+"%", PageRequest.of(page, pageSize, Sort.by(sortKeysForPhoneService.getDirection(), sortKeysForPhoneService.getAttr().getName())));
+        Page<Phone> phonePage = phoneDao.findAllByNumberLike("%"+number+"%", new PageRequest(page, pageSize, new Sort(sortKeysForPhoneService.getDirection(), sortKeysForPhoneService.getAttr().getName())));
         return dtoMapper.toListMapping(phonePage.getContent(), PhoneExtendedDto.class);
     }
 

@@ -5,10 +5,11 @@ import com.senla.training_2019.smolka.api.exceptions.dao.DataAccessException;
 import com.senla.training_2019.smolka.model.entities.City_;
 import com.senla.training_2019.smolka.model.entities.City;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityGraph;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
+//import javax.transaction.Transactional;
 
 @Repository
 public class CityDao extends ADao<City, Integer> implements ICityDao {

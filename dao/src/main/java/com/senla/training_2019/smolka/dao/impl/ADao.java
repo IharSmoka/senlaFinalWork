@@ -23,7 +23,7 @@ public class ADao<E, Id> implements IDao<E, Id> {
     private static final String NULL_PAGINATION_SETTINGS = "Sorting settings not initialize!";
     private static final String NULL_FILTER_SETTINGS = "Nothing to search!";
 
-    @PersistenceContext(unitName = "persistence")
+    @PersistenceContext
     protected EntityManager entityManager;
 
     public Class<E> getEntityClass() {

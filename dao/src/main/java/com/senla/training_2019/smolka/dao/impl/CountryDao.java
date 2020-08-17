@@ -6,9 +6,10 @@ import com.senla.training_2019.smolka.model.entities.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
-import javax.transaction.Transactional;
+//import javax.transaction.Transactional;
 
 @Repository
 public class CountryDao extends ADao<Country, Integer> implements ICountryDao {

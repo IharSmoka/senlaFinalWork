@@ -8,6 +8,8 @@ import com.senla.training_2019.smolka.model.dto.CountryDto;
 import com.senla.training_2019.smolka.model.dto.MessageDto;
 import com.senla.training_2019.smolka.model.dto.validation_modes.CreateMode;
 import com.senla.training_2019.smolka.model.dto.validation_modes.UpdateMode;
+import com.senla.training_2019.smolka.test_starter.TestBean;
+import com.senla.training_2019.smolka.test_starter.TestConfig;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -23,9 +25,11 @@ public class CountryController {
     private final static String UPDATE_IS_SUCCESS = "Country updated successfully!";
     private final static String DELETE_IS_SUCCESS = "Country removed successfully!";
     private final ICountryService countryService;
+    private final TestBean testBean;
 
-    public CountryController(ICountryService countryService) {
+    public CountryController(ICountryService countryService, TestBean testBean) {
         this.countryService = countryService;
+        this.testBean = testBean;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -56,6 +60,7 @@ public class CountryController {
                                                          @RequestParam(value = "pageSize", required = false) Integer pageSize,
                                                          @RequestParam(value = "name", required = false) String name,
                                                          @RequestParam(value = "sortKey", required = false) String sortKey) throws InternalServiceException {
+        System.out.println(testBean.getMsg());
         List<CountryDto> countryDtoList = null;
         Long count = 0L;
         if (name == null) {

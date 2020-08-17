@@ -1,236 +1,236 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
-    <changeSet context="test" author="Ihar Smolka" id="test_change_set">
-        <createTable tableName="test">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-        <rollback>
-            drop table test;
-        </rollback>
-    </changeSet>
+<!--    <changeSet context="test" author="Ihar Smolka" id="test_change_set">-->
+<!--        <createTable tableName="test">-->
+<!--            <column autoIncrement="true" name="id" type="SERIAL">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--        <rollback>-->
+<!--            drop table test;-->
+<!--        </rollback>-->
+<!--    </changeSet>-->
 
-    <changeSet context="dev" author="Ihar Smolka" id="dev_change_set">
-        <createTable tableName="product_category">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="category_name" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
+<!--    <changeSet context="dev" author="Ihar Smolka" id="dev_change_set">-->
+<!--        <createTable tableName="product_category">-->
+<!--            <column autoIncrement="true" name="id" type="SERIAL">-->
+<!--                <constraints nullable="false" primaryKey="true"/>-->
+<!--            </column>-->
+<!--            <column name="category_name" type="VARCHAR(50)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
 
-        <createTable tableName="country">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="country_name" type="VARCHAR(50)">
-                <constraints nullable="false" unique="true"/>
-            </column>
-        </createTable>
+<!--        <createTable tableName="country">-->
+<!--            <column autoIncrement="true" name="id" type="SERIAL">-->
+<!--                <constraints nullable="false" primaryKey="true"/>-->
+<!--            </column>-->
+<!--            <column name="country_name" type="VARCHAR(50)">-->
+<!--                <constraints nullable="false" unique="true"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
 
-        <createTable tableName="city">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="country_id" type="INT">
-                <constraints nullable="false" foreignKeyName="country_id_ref" references="country(id)"/>
-            </column>
-            <column name="city_name" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
+<!--        <createTable tableName="city">-->
+<!--            <column autoIncrement="true" name="id" type="SERIAL">-->
+<!--                <constraints nullable="false" primaryKey="true"/>-->
+<!--            </column>-->
+<!--            <column name="country_id" type="INT">-->
+<!--                <constraints nullable="false" foreignKeyName="country_id_ref" references="country(id)"/>-->
+<!--            </column>-->
+<!--            <column name="city_name" type="VARCHAR(50)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
 
-        <addForeignKeyConstraint baseColumnNames="country_id"
-                                 baseTableName="city"
-                                 constraintName="country_city_fk"
-                                 initiallyDeferred="false"
-                                 onDelete="CASCADE"
-                                 onUpdate="CASCADE"
-                                 referencedColumnNames="id"
-                                 referencedTableName="country"
-        />
+<!--        <addForeignKeyConstraint baseColumnNames="country_id"-->
+<!--                                 baseTableName="city"-->
+<!--                                 constraintName="country_city_fk"-->
+<!--                                 initiallyDeferred="false"-->
+<!--                                 onDelete="CASCADE"-->
+<!--                                 onUpdate="CASCADE"-->
+<!--                                 referencedColumnNames="id"-->
+<!--                                 referencedTableName="country"-->
+<!--        />-->
 
-        <sql dbms="postgresql">
-            CREATE TABLE IF NOT EXISTS address(
-            id SERIAL PRIMARY KEY NOT NULL,
-            city_id INT NOT NULL,
-            street_name varchar(128),
+<!--        <sql dbms="postgresql">-->
+<!--            CREATE TABLE IF NOT EXISTS address(-->
+<!--            id SERIAL PRIMARY KEY NOT NULL,-->
+<!--            city_id INT NOT NULL,-->
+<!--            street_name varchar(128),-->
 
-            FOREIGN KEY (city_id)
-            references city(id)
-            ON UPDATE cascade ON DELETE cascade
-            );
+<!--            FOREIGN KEY (city_id)-->
+<!--            references city(id)-->
+<!--            ON UPDATE cascade ON DELETE cascade-->
+<!--            );-->
 
-            CREATE TABLE IF NOT EXISTS credential(
-            id SERIAL PRIMARY KEY NOT NULL,
-            user_login varchar(50) NOT NULL UNIQUE,
-            user_password varchar(256) NOT NULL,
-            user_role varchar(50)
-            );
+<!--            CREATE TABLE IF NOT EXISTS credential(-->
+<!--            id SERIAL PRIMARY KEY NOT NULL,-->
+<!--            user_login varchar(50) NOT NULL UNIQUE,-->
+<!--            user_password varchar(256) NOT NULL,-->
+<!--            user_role varchar(50)-->
+<!--            );-->
 
-            CREATE TABLE IF NOT EXISTS user_inf(
-            id SERIAL PRIMARY KEY NOT NULL,
-            user_credential BIGINT NOT NULL UNIQUE,
-            first_name VARCHAR(50) NOT NULL,
-            second_name VARCHAR(50) NOT NULL,
-            birth_date DATE,
-            email VARCHAR(128) NOT NULL UNIQUE,
+<!--            CREATE TABLE IF NOT EXISTS user_inf(-->
+<!--            id SERIAL PRIMARY KEY NOT NULL,-->
+<!--            user_credential BIGINT NOT NULL UNIQUE,-->
+<!--            first_name VARCHAR(50) NOT NULL,-->
+<!--            second_name VARCHAR(50) NOT NULL,-->
+<!--            birth_date DATE,-->
+<!--            email VARCHAR(128) NOT NULL UNIQUE,-->
 
-            FOREIGN KEY (user_credential)
-            references credential(id)
-            ON UPDATE cascade ON DELETE cascade
-            );
+<!--            FOREIGN KEY (user_credential)-->
+<!--            references credential(id)-->
+<!--            ON UPDATE cascade ON DELETE cascade-->
+<!--            );-->
 
-            CREATE TABLE IF NOT EXISTS maker(
-            id SERIAL PRIMARY KEY NOT NULL,
-            country_id INT NOT NULL,
-            maker_name VARCHAR(50) NOT NULL,
+<!--            CREATE TABLE IF NOT EXISTS maker(-->
+<!--            id SERIAL PRIMARY KEY NOT NULL,-->
+<!--            country_id INT NOT NULL,-->
+<!--            maker_name VARCHAR(50) NOT NULL,-->
 
-            FOREIGN KEY (country_id)
-            references country(id)
-            ON UPDATE cascade ON DELETE cascade
-            );
+<!--            FOREIGN KEY (country_id)-->
+<!--            references country(id)-->
+<!--            ON UPDATE cascade ON DELETE cascade-->
+<!--            );-->
 
-            CREATE TABLE IF NOT EXISTS product(
-            id SERIAL PRIMARY KEY NOT NULL,
-            product_name VARCHAR(50) NOT NULL,
-            maker_id BIGINT NOT NULL,
-            category_id INT NOT NULL,
+<!--            CREATE TABLE IF NOT EXISTS product(-->
+<!--            id SERIAL PRIMARY KEY NOT NULL,-->
+<!--            product_name VARCHAR(50) NOT NULL,-->
+<!--            maker_id BIGINT NOT NULL,-->
+<!--            category_id INT NOT NULL,-->
 
-            FOREIGN KEY (maker_id)
-            references maker(id)
-            ON UPDATE cascade ON DELETE cascade,
+<!--            FOREIGN KEY (maker_id)-->
+<!--            references maker(id)-->
+<!--            ON UPDATE cascade ON DELETE cascade,-->
 
-            FOREIGN KEY (category_id)
-            references product_category(id)
-            ON UPDATE cascade ON DELETE cascade
-            );
+<!--            FOREIGN KEY (category_id)-->
+<!--            references product_category(id)-->
+<!--            ON UPDATE cascade ON DELETE cascade-->
+<!--            );-->
 
-            CREATE TABLE IF NOT EXISTS store(
-            id SERIAL PRIMARY KEY NOT NULL,
-            store_name VARCHAR(50) NOT NULL,
-            address_id BIGINT NOT NULL,
+<!--            CREATE TABLE IF NOT EXISTS store(-->
+<!--            id SERIAL PRIMARY KEY NOT NULL,-->
+<!--            store_name VARCHAR(50) NOT NULL,-->
+<!--            address_id BIGINT NOT NULL,-->
 
-            FOREIGN KEY (address_id)
-            references address(id)
-            ON UPDATE cascade ON DELETE cascade
-            );
+<!--            FOREIGN KEY (address_id)-->
+<!--            references address(id)-->
+<!--            ON UPDATE cascade ON DELETE cascade-->
+<!--            );-->
 
-            CREATE TABLE IF NOT EXISTS store_position(
-            id SERIAL PRIMARY KEY NOT NULL,
-            store_id BIGINT NOT NULL,
-            product_id BIGINT NOT NULL,
+<!--            CREATE TABLE IF NOT EXISTS store_position(-->
+<!--            id SERIAL PRIMARY KEY NOT NULL,-->
+<!--            store_id BIGINT NOT NULL,-->
+<!--            product_id BIGINT NOT NULL,-->
 
-            FOREIGN KEY (store_id)
-            references store(id)
-            ON UPDATE cascade ON DELETE cascade,
+<!--            FOREIGN KEY (store_id)-->
+<!--            references store(id)-->
+<!--            ON UPDATE cascade ON DELETE cascade,-->
 
-            FOREIGN KEY (product_id)
-            references product(id)
-            ON UPDATE cascade ON DELETE cascade
-            );
+<!--            FOREIGN KEY (product_id)-->
+<!--            references product(id)-->
+<!--            ON UPDATE cascade ON DELETE cascade-->
+<!--            );-->
 
 
-            CREATE TABLE IF NOT EXISTS cost_dynamic(
-            id SERIAL PRIMARY KEY NOT NULL,
-            position_id BIGINT NOT NULL,
-            cost BIGINT NOT NULL,
-            cost_date TIMESTAMP with time zone NOT NULL,
+<!--            CREATE TABLE IF NOT EXISTS cost_dynamic(-->
+<!--            id SERIAL PRIMARY KEY NOT NULL,-->
+<!--            position_id BIGINT NOT NULL,-->
+<!--            cost BIGINT NOT NULL,-->
+<!--            cost_date TIMESTAMP with time zone NOT NULL,-->
 
-            FOREIGN KEY (position_id)
-            references store_position(id)
-            ON UPDATE cascade ON DELETE cascade
-            );
+<!--            FOREIGN KEY (position_id)-->
+<!--            references store_position(id)-->
+<!--            ON UPDATE cascade ON DELETE cascade-->
+<!--            );-->
 
-            CREATE UNIQUE INDEX city_index ON city(city_name, country_id);
-            CREATE UNIQUE INDEX address_index ON address(city_id, street_name);
-            CREATE UNIQUE INDEX product_index ON product(product_name, maker_id, category_id);
-            CREATE UNIQUE INDEX store_index ON store(store_name, address_id);
-            CREATE UNIQUE INDEX pos_index ON store_position(store_id, product_id);
-            CREATE UNIQUE INDEX cost_dynamic_index ON cost_dynamic(position_id, cost_date);
-        </sql>
+<!--            CREATE UNIQUE INDEX city_index ON city(city_name, country_id);-->
+<!--            CREATE UNIQUE INDEX address_index ON address(city_id, street_name);-->
+<!--            CREATE UNIQUE INDEX product_index ON product(product_name, maker_id, category_id);-->
+<!--            CREATE UNIQUE INDEX store_index ON store(store_name, address_id);-->
+<!--            CREATE UNIQUE INDEX pos_index ON store_position(store_id, product_id);-->
+<!--            CREATE UNIQUE INDEX cost_dynamic_index ON cost_dynamic(position_id, cost_date);-->
+<!--        </sql>-->
 
-        <rollback>
-            drop table cost_dynamic;
-            drop table store_position;
-            drop table store;
-            drop table product;
-            drop table maker;
-            drop table user_inf;
-            drop table credential;
-            drop table address;
-            drop table city;
-            drop table country;
-            drop table product_category;
-        </rollback>
-    </changeSet>
+<!--        <rollback>-->
+<!--            drop table cost_dynamic;-->
+<!--            drop table store_position;-->
+<!--            drop table store;-->
+<!--            drop table product;-->
+<!--            drop table maker;-->
+<!--            drop table user_inf;-->
+<!--            drop table credential;-->
+<!--            drop table address;-->
+<!--            drop table city;-->
+<!--            drop table country;-->
+<!--            drop table product_category;-->
+<!--        </rollback>-->
+<!--    </changeSet>-->
 
-    <changeSet context="dev" id="dev_change_set_fill_initial_data" author="Ihar Smolka">
-        <sql dbms="postgresql">
-            INSERT INTO country(country_name) VALUES('Republika Srpska');
-            INSERT INTO country(country_name) VALUES('Belarus');
-            INSERT INTO country(country_name) VALUES('Russian Federation');
-            INSERT INTO credential(user_login, user_password, user_role) VALUES('rootuser', '$2a$10$8ExbDFX1RHv2VINb4kHEaOWUOl7kxjr0FmoCjKjBkDbr3MBfJLcaK', 'ADMIN');
-            INSERT INTO user_inf(user_credential, first_name, second_name, birth_date, email) VALUES(1, 'Ihar', 'Smolka', '1999.11.11', 'ihrsmolka@gmail.com');
-        </sql>
+<!--    <changeSet context="dev" id="dev_change_set_fill_initial_data" author="Ihar Smolka">-->
+<!--        <sql dbms="postgresql">-->
+<!--            INSERT INTO country(country_name) VALUES('Republika Srpska');-->
+<!--            INSERT INTO country(country_name) VALUES('Belarus');-->
+<!--            INSERT INTO country(country_name) VALUES('Russian Federation');-->
+<!--            INSERT INTO credential(user_login, user_password, user_role) VALUES('rootuser', '$2a$10$8ExbDFX1RHv2VINb4kHEaOWUOl7kxjr0FmoCjKjBkDbr3MBfJLcaK', 'ADMIN');-->
+<!--            INSERT INTO user_inf(user_credential, first_name, second_name, birth_date, email) VALUES(1, 'Ihar', 'Smolka', '1999.11.11', 'ihrsmolka@gmail.com');-->
+<!--        </sql>-->
 
-        <rollback>
-            DELETE FROM country;
-        </rollback>
-    </changeSet>
+<!--        <rollback>-->
+<!--            DELETE FROM country;-->
+<!--        </rollback>-->
+<!--    </changeSet>-->
 
-    <changeSet context="dev" id="dev_change_set_add_phone_table" author="Ihar Smolka">
-        <createTable tableName="phone">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="store_id" type="INT">
-                <constraints nullable="false" foreignKeyName="phone_store_id_ref" references="store(id)"/>
-            </column>
-            <column name="operator_code" type="VARCHAR(6)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="number" type="VARCHAR(12)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-        <rollback>
-            drop table phone;
-        </rollback>
-    </changeSet>
+<!--    <changeSet context="dev" id="dev_change_set_add_phone_table" author="Ihar Smolka">-->
+<!--        <createTable tableName="phone">-->
+<!--            <column autoIncrement="true" name="id" type="SERIAL">-->
+<!--                <constraints nullable="false" primaryKey="true"/>-->
+<!--            </column>-->
+<!--            <column name="store_id" type="INT">-->
+<!--                <constraints nullable="false" foreignKeyName="phone_store_id_ref" references="store(id)"/>-->
+<!--            </column>-->
+<!--            <column name="operator_code" type="VARCHAR(6)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="number" type="VARCHAR(12)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--        <rollback>-->
+<!--            drop table phone;-->
+<!--        </rollback>-->
+<!--    </changeSet>-->
 
-    <changeSet context="dev" id="dev_change_set_fill_data_2" author="Ihar Smolka">
-        <sql>
-            INSERT INTO city(country_id, city_name) VALUES(1, 'Banya Luka');
-            INSERT INTO city(country_id, city_name) VALUES(1, 'Majevica');
-            INSERT INTO address(city_id, street_name) VALUES(1, 'Pionerska 18');
-            INSERT INTO address(city_id, street_name) VALUES(2, 'Dobrovalcska 10');
-            INSERT INTO store(address_id, store_name) VALUES(1, 'Store 1');
-            INSERT INTO store(address_id, store_name) VALUES(2, 'Store 2');
+<!--    <changeSet context="dev" id="dev_change_set_fill_data_2" author="Ihar Smolka">-->
+<!--        <sql>-->
+<!--            INSERT INTO city(country_id, city_name) VALUES(1, 'Banya Luka');-->
+<!--            INSERT INTO city(country_id, city_name) VALUES(1, 'Majevica');-->
+<!--            INSERT INTO address(city_id, street_name) VALUES(1, 'Pionerska 18');-->
+<!--            INSERT INTO address(city_id, street_name) VALUES(2, 'Dobrovalcska 10');-->
+<!--            INSERT INTO store(address_id, store_name) VALUES(1, 'Store 1');-->
+<!--            INSERT INTO store(address_id, store_name) VALUES(2, 'Store 2');-->
 
-            INSERT INTO phone(store_id, operator_code, number) VALUES(1, '111', '111111111');
-            INSERT INTO phone(store_id, operator_code, number) VALUES(1, '222', '222222222');
-            INSERT INTO phone(store_id, operator_code, number) VALUES(1, '333', '333333333');
-            INSERT INTO phone(store_id, operator_code, number) VALUES(1, '444', '444444444');
+<!--            INSERT INTO phone(store_id, operator_code, number) VALUES(1, '111', '111111111');-->
+<!--            INSERT INTO phone(store_id, operator_code, number) VALUES(1, '222', '222222222');-->
+<!--            INSERT INTO phone(store_id, operator_code, number) VALUES(1, '333', '333333333');-->
+<!--            INSERT INTO phone(store_id, operator_code, number) VALUES(1, '444', '444444444');-->
 
-            INSERT INTO phone(store_id, operator_code, number) VALUES(2, '555', '555555555');
-            INSERT INTO phone(store_id, operator_code, number) VALUES(2, '666', '666666666');
-            INSERT INTO phone(store_id, operator_code, number) VALUES(2, '777', '777777777');
-            INSERT INTO phone(store_id, operator_code, number) VALUES(2, '888', '888888888');
+<!--            INSERT INTO phone(store_id, operator_code, number) VALUES(2, '555', '555555555');-->
+<!--            INSERT INTO phone(store_id, operator_code, number) VALUES(2, '666', '666666666');-->
+<!--            INSERT INTO phone(store_id, operator_code, number) VALUES(2, '777', '777777777');-->
+<!--            INSERT INTO phone(store_id, operator_code, number) VALUES(2, '888', '888888888');-->
 
-            INSERT INTO phone(store_id, operator_code, number) VALUES(1, '11122', '1111121111');
-            INSERT INTO phone(store_id, operator_code, number) VALUES(1, '2221', '2222212222');
-            INSERT INTO phone(store_id, operator_code, number) VALUES(1, '3334', '3333334333');
-            INSERT INTO phone(store_id, operator_code, number) VALUES(1, '4445', '4444445444');
+<!--            INSERT INTO phone(store_id, operator_code, number) VALUES(1, '11122', '1111121111');-->
+<!--            INSERT INTO phone(store_id, operator_code, number) VALUES(1, '2221', '2222212222');-->
+<!--            INSERT INTO phone(store_id, operator_code, number) VALUES(1, '3334', '3333334333');-->
+<!--            INSERT INTO phone(store_id, operator_code, number) VALUES(1, '4445', '4444445444');-->
 
-            INSERT INTO phone(store_id, operator_code, number) VALUES(2, '55511', '5555555551');
-            INSERT INTO phone(store_id, operator_code, number) VALUES(2, '66622', '6666666266');
-            INSERT INTO phone(store_id, operator_code, number) VALUES(2, '77744', '7777777377');
-            INSERT INTO phone(store_id, operator_code, number) VALUES(2, '88833', '8888888488');
-        </sql>
-    </changeSet>
+<!--            INSERT INTO phone(store_id, operator_code, number) VALUES(2, '55511', '5555555551');-->
+<!--            INSERT INTO phone(store_id, operator_code, number) VALUES(2, '66622', '6666666266');-->
+<!--            INSERT INTO phone(store_id, operator_code, number) VALUES(2, '77744', '7777777377');-->
+<!--            INSERT INTO phone(store_id, operator_code, number) VALUES(2, '88833', '8888888488');-->
+<!--        </sql>-->
+<!--    </changeSet>-->
 
 </databaseChangeLog>
